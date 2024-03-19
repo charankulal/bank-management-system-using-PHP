@@ -34,7 +34,7 @@ include 'assets/php/boilerplate.php'
   <div class="card-body">
     <h5 class="card-title">Customer Register</h5>
     <p class="card-text">Are you a new user? Create account!!</p>
-    <a href="customer_registration.php" class="btn btn-secondary">Register</a>
+    <a href="customer_registration.html" class="btn btn-secondary">Register</a>
   </div>
 </div>
 </div>
