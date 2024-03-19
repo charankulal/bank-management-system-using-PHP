@@ -1,0 +1,23 @@
+.heading{
+    margin-top: 8%;
+    margin-bottom: 2%;
+}
+
+.index-img{
+    height:100px;
+    width: 100px;
+    margin-left: 400px;
+    margin-bottom: 50px;
+}
+
+.box{
+    border: 2px solid rgb(236, 122, 122);
+    border-radius: 5px;
+    padding: 25px;
+}
+
+.emp-login-card{
+    background-color: rgb(243, 144, 144);
+}
+
+
