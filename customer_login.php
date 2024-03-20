@@ -1,4 +1,74 @@
 <?php
+session_start();
+
+// Check if user is already logged in
+if (isset($_SESSION['username'])) {
+    // If logged in, redirect to dashboard
+    header("Location: index.php");
+    exit();
+} 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar bg-primary" data-bs-theme="dark">
+      <div class="mx-3">
+        <img src="assets/img/logo.png" alt="" height="60px" width="60px" />
+        <span class="navbar-brand mb-0 h1 mx-3">Your Bank</span>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h4>Customer Login</h4>
+            </div>
+            <div class="card-body">
+              <form action="customer_login.php" method="post">
+                <div class="form-group">
+                  <label for="username">Username:</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password">Password:</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<?php
 
 include 'db_connect.php';
 
@@ -16,8 +86,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // User found, redirect to dashboard or home page
-        echo "Login successful!";
+        $row = $result->fetch_assoc();
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['name'] = $row['name'];
+        // Add other user data you may need in session
+
+        // Redirect to dashboard or home page
+        header("Location: customer_register_landing.html");
+        
         // You can redirect the user to another page here
     } else {
         // User not found or incorrect password
@@ -28,3 +104,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close the database connection
 $conn->close();
 ?>
+
