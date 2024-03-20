@@ -2,7 +2,7 @@
 session_start();
 
 // Check if user is already logged in
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['emp_username'])) {
     // If logged in, redirect to dashboard
     header("Location: index.php");
     exit();
@@ -34,7 +34,7 @@ if (isset($_SESSION['username'])) {
         <div class="col-md-6">
           <div class="card">
             <div class="card-header">
-              <h4>Customer Login</h4>
+              <h4>Employee Login</h4>
             </div>
             <div class="card-body">
               <form action="" method="post">
@@ -82,13 +82,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = md5($password);
 
     // Query to fetch user details based on provided username and hashed password
-    $sql = "SELECT * FROM customer WHERE username='$username' AND password='$hashed_password'";
+    $sql = "SELECT * FROM employee WHERE username='$username' AND password='$hashed_password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['name'] = $row['name'];
+        $_SESSION['emp_username'] = $row['username'];
+        $_SESSION['emp_name'] = $row['name'];
         // Add other user data you may need in session
 
         // Redirect to dashboard or home page

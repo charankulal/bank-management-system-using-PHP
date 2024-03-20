@@ -18,7 +18,7 @@ include 'assets/php/boilerplate.php'
   <div class="card-body ">
     <h5 class="card-title">Employee Login</h5>
     <p class="card-text">For authorized personnel use only</p>
-    <a href="#" class="btn btn-danger">Login</a>
+    <a href="employee_login.php" class="btn btn-danger">Login</a>
   </div>
 </div>
 <div class="card mx-2" style="width: 17rem;">
