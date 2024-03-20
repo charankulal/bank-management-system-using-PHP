@@ -26,7 +26,7 @@ include 'assets/php/boilerplate.php'
   <div class="card-body">
     <h5 class="card-title">Customer Login</h5>
     <p class="card-text">Already registered customer click here!!</p>
-    <a href="#" class="btn btn-primary">Login</a>
+    <a href="./customer_login.html" class="btn btn-primary">Login</a>
   </div>
 </div>
 <div class="card mx-2" style="width: 17rem;">
@@ -34,7 +34,7 @@ include 'assets/php/boilerplate.php'
   <div class="card-body">
     <h5 class="card-title">Customer Register</h5>
     <p class="card-text">Are you a new user? Create account!!</p>
-    <a href="customer_registration.html" class="btn btn-secondary">Register</a>
+    <a href="customer_register.html" class="btn btn-secondary">Register</a>
   </div>
 </div>
 </div>
