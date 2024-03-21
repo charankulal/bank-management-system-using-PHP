@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['emp_username'])) {
+    // If logged in, redirect to dashboard
+    header("Location: index.php");
+    exit();
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +63,7 @@ session_start();
     <h3 class="text-center">Dashboard</h3>
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a>
+            <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Create Account</a>
@@ -86,9 +91,14 @@ session_start();
 
 <div class="content">
     <!-- Main content goes here -->
-    <h2>Welcome</h2>
+    <h2>Stats</h2>
     <!-- You can add more content here -->
 </div>
+<script>
+    function loadPage(pageUrl) {
+        $('.content').load(pageUrl);
+    }
+</script>
 
 <!-- Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
