@@ -2,21 +2,16 @@
 session_start();
 include 'db_connect.php';
 
-if (!isset($_SESSION['emp_username'])) {
+if (!isset($_SESSION['username'])) {
     // If logged in, redirect to dashboard
     header("Location: index.php");
     exit();
 } 
 
-if(isset($_POST['delete_id'])) {
-    $delete_id = $_POST['delete_id'];
-    $sql_delete = "DELETE FROM account WHERE account_number = '$delete_id'";
-    if ($conn->query($sql_delete) === TRUE) {
-        
-    } else {
-        
-    }
-}
+$sql = "SELECT customer.name, customer.email, customer.phone_number, account.account_number, account.date_opened, account.branch_id, account.balance
+FROM account
+JOIN customer ON account.customer_id = customer.customer_id;";
+$result = $conn->query($sql);
 
 
 
@@ -67,13 +62,13 @@ if(isset($_POST['delete_id'])) {
       </div>
       <div class="mx-3">
         <span class="navbar-brand mb-0 h1 mx-3"><?php echo $_SESSION["emp_name"]; ?></span>
-        <a class="navbar-brand mb-0 h1 mx-3 text-warning" href="logout.php">Logout</a>
+        <a class="navbar-brand mb-0 h1 mx-3 text-warning" href="#">Logout</a>
         
       </div>
       
       
     </nav>
-    <?php if($_SESSION['emp_username'] == 'admin'): ?>
+    <?php if($result->num_rows>0): ?>
 <div class="sidebar">
     <h3 class="text-center">Dashboard</h3>
     <ul class="nav flex-column">

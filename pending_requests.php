@@ -19,11 +19,24 @@ if (isset($_POST['delete_id'])) {
         echo "<div class='alert alert-danger' role='alert'>Error deleting account: " . $conn->error . "</div>";
     }
 }
+if (isset($_POST['approve_id'])) {
+    $approve_id = $_POST['approve_id'];
+    $sql = "UPDATE account SET status='approved' WHERE account_number='$approve_id'";
+    if ($conn->query($sql) === TRUE) {
+        // echo "<div class='alert alert-success' role='alert'>Account updated successfully.</div>";
+        header('Location: employee_dashboard.php');
+        exit;
+    } else {
+        // echo "<div class='alert alert-danger' role='alert'>Error updating account: " . $conn->error . "</div>";
+    }
+}
 
 // Fetch all accounts from the database
 $sql = "SELECT customer.name, customer.email, customer.phone_number, account.account_number, account.date_opened, account.branch_id, account.balance
-FROM account
-JOIN customer ON account.customer_id = customer.customer_id;";
+        FROM account
+        JOIN customer ON account.customer_id = customer.customer_id
+        WHERE account.status = 'pending';";
+
 $result = $conn->query($sql);
 ?>
 
@@ -111,23 +124,21 @@ $result = $conn->query($sql);
                             echo "<td>" . $row["email"] . "</td>";
                             echo "<td>" . $row["phone_number"] . "</td>";
                             echo "<td>" . $row["account_number"] . "</td>";
-                            
+                            $_SESSION['account_number'] = $row['account_number'];
                             echo "<td>" . $row["date_opened"] . "</td>";
                             echo " <td> ₹ " . $row["balance"] . "</td>";
                             echo "<td class='btn-group'>";
-                            echo "<form method='post' action='update_account_by_employee.php'>";
-                            echo "<input type='hidden' name='update_id' value='" . $row["account_number"] . "'>";
-                            $_SESSION['account_number'] = $row['account_number'];
-                            echo "<button type='submit' class='btn btn-primary'>Update</button>";
+                            echo "<form method='post' action='pending_requests.php'>";
+                            echo "<input type='hidden' name='approve_id' value='" . $row["account_number"] . "'>";
+                            echo "<button type='submit' class='btn btn-primary'>Approve</button>";
                             echo "</form>";
-                            echo "<form method='post' action='employee_dashboard.php'>";
+                            echo "<form method='post' action='pending_requests.php'>";
                             echo "<input type='hidden' name='delete_id' value='" . $row["account_number"] . "'>";
                             echo "<button type='submit' class='btn btn-danger' >Delete</button>";
                             echo "</form>";
                             echo "</td>";
                             echo "</tr>";
                         }
-                        
                     } else {
                         echo "<tr><td colspan='6'>No accounts found.</td></tr>";
                     }

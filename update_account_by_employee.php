@@ -31,7 +31,7 @@ exit;
         $balance = $row['balance'];
         $branch_id = $row['branch_id'];
     } else {
-        echo "<div class='alert alert-danger' role='alert'>Account not found.</div>";
+        // echo "<div class='alert alert-danger' role='alert'>Account not found.</div>";
         exit; // Exit script if account not found
     }
 
