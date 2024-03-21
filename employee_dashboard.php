@@ -7,6 +7,34 @@ if (!isset($_SESSION['emp_username'])) {
     header("Location: index.php");
     exit();
 } 
+
+if(isset($_POST['delete_id'])) {
+    $delete_id = $_POST['delete_id'];
+    $sql_delete = "DELETE FROM account WHERE account_number = '$delete_id'";
+    if ($conn->query($sql_delete) === TRUE) {
+        
+    } else {
+        
+    }
+}
+
+$account_number = $_SESSION['account_number'];
+    $sql_fetch = "SELECT * FROM account WHERE account_number='$account_number'";
+    $result_fetch = $conn->query($sql_fetch);
+    if ($result_fetch->num_rows == 1) {
+        $row = $result_fetch->fetch_assoc();
+        $customer_id = $row['customer_id'];
+        $balance = $row['balance'];
+        $branch_id = $row['branch_id'];
+    } else {
+        // echo "<div class='alert alert-danger' role='alert'>Account not found.</div>";
+        exit; // Exit script if account not found
+    }
+
+// Check if the form is submitted
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,13 +96,13 @@ if (!isset($_SESSION['emp_username'])) {
             <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_account_by_emp.php')"><i class="fas fa-user-plus"></i> Create Account</a>
+            <a class="nav-link" href="#" onclick="loadPage('create_account_by_admin.php')"><i class="fas fa-user-plus"></i> Create Account</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Accounts</a>
+            <a class="nav-link" href="#" onclick="loadPage('list_all_accounts_by_admin.php')"><i class="fas fa-list"></i> List All Accounts</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-building"></i> Create Branch</a>
+            <a class="nav-link" href="#" onclick="loadPage('create_branch.php')"><i class="fas fa-building"></i> Create Branch</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Branches</a>
