@@ -1,5 +1,7 @@
 <?php
 session_start();
+include 'db_connect.php';
+
 if (!isset($_SESSION['emp_username'])) {
     // If logged in, redirect to dashboard
     header("Location: index.php");
@@ -114,10 +116,11 @@ if (!isset($_SESSION['emp_username'])) {
 
 <div class="content">
     <!-- Main content goes here -->
-    <h2>Stats</h2>
+    <h2>Welcome <?php echo $_SESSION['emp_name'] ?>   </h2>
     <!-- You can add more content here -->
 </div>
 <script>
+  
     function loadPage(pageUrl) {
         $('.content').load(pageUrl);
     }

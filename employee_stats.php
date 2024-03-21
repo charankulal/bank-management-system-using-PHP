@@ -1,3 +1,12 @@
+<?php 
+session_start();
+include 'db_connect.php';
+if (!isset($_SESSION['emp_username'])) {
+    // If logged in, redirect to dashboard
+    header("Location: index.php");
+    exit();
+}  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,15 +64,27 @@
             <div class="card" style="background-color: #f8d7da;">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-users"></i> Total Branches</h5>
-                    <p class="stats">10,000</p>
+                    <p class="stats">
+                    <?php 
+                  $num_of_branches = $conn->query("SELECT count(*) FROM branch");
+            echo  $num_of_branches->fetch_column();
+                    
+                ?>
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-4 mb-4">
             <div class="card" style="background-color: #d4edda;">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-users"></i> Total Accounts</h5>
-                    <p class="stats">10,000</p>
+                    <h5 class="card-title"><i class="fas fa-users"></i>
+                    Total Accounts
+                    </h5>
+                    <p class="stats"><?php 
+                  $num_of_accounts = $conn->query("SELECT count(*) FROM account");
+            echo  $num_of_accounts->fetch_column();
+                    
+                ?></p>
                 </div>
             </div>
         </div>
@@ -71,7 +92,13 @@
             <div class="card" style="background-color: #cce5ff;">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-money-bill-wave"></i> Total Deposits</h5>
-                    <p class="stats"> ₹1,000,000</p>
+                    <p class="stats"> ₹
+                    <?php 
+                  $total_deposits = $conn->query("SELECT sum(balance) FROM account");
+            echo  $total_deposits->fetch_column();
+                    
+                ?>
+                    </p>
                 </div>
             </div>
         </div>
@@ -91,7 +118,13 @@
             <div class="card" style="background-color: #f8f9fa;">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-users"></i> Total Customers</h5>
-                    <p class="stats">20,000</p>
+                    <p class="stats">
+                    <?php 
+                  $num_of_customers = $conn->query("SELECT count(*) FROM customer");
+            echo  $num_of_customers->fetch_column();
+                    
+                ?>
+                    </p>
                 </div>
             </div>
         </div>
@@ -99,7 +132,13 @@
             <div class="card" style="background-color: #d1ecf1;">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-users"></i> Total Employees</h5>
-                    <p class="stats">20,000</p>
+                    <p class="stats">
+                    <?php 
+                  $num_of_employee = $conn->query("SELECT count(*) FROM employee");
+            echo  $num_of_employee->fetch_column();
+                    
+                ?>
+                    </p>
                 </div>
             </div>
         </div>

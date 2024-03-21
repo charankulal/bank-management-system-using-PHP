@@ -16,12 +16,15 @@ function generateAccountNumber() {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $customer_id = mysqli_real_escape_string($conn, $_POST['customer_id']);
+    $cust_username = mysqli_real_escape_string($conn, $_POST['cust_username']);
     $balance = mysqli_real_escape_string($conn, $_POST['balance']);
     $branch_id = mysqli_real_escape_string($conn, $_POST['branch']);
 
     // Generate random 7-digit alphanumeric account number
     $account_number = generateAccountNumber();
+
+    $fetch_cust_id = $conn->query("SELECT customer_id FROM customer where username='$cust_username'");
+            $customer_id=  $fetch_cust_id->fetch_column();
 
     // Prepare and execute SQL query to insert account details into database
     $sql = "INSERT INTO account (account_number, customer_id, balance, branch_id, status) VALUES ('$account_number', '$customer_id', '$balance', '$branch_id','approved')";
@@ -49,11 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Create Bank Account</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="form-group">
-            <label for="customer_id">Customer ID:</label>
-            <input type="text" class="form-control" id="customer_id" name="customer_id" required>
+            <label for="cust_username">Customer Username:</label>
+            <input type="text" class="form-control" id="cust_username" name="cust_username" required>
         </div>
         <div class="form-group">
-            <label for="balance">Balance:</label>
+            <label for="balance">Initial Deposit:</label>
             <input type="text" class="form-control" id="balance" name="balance" required>
         </div>
         <div class="form-group">
