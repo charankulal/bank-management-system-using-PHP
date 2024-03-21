@@ -58,7 +58,7 @@ if (!isset($_SESSION['emp_username'])) {
       
       
     </nav>
-    
+    <?php if($_SESSION['emp_username'] == 'admin'): ?>
 <div class="sidebar">
     <h3 class="text-center">Dashboard</h3>
     <ul class="nav flex-column">
@@ -66,7 +66,7 @@ if (!isset($_SESSION['emp_username'])) {
             <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Create Account</a>
+            <a class="nav-link" href="#" onclick="loadPage('create_account_by_emp.php')"><i class="fas fa-user-plus"></i> Create Account</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Accounts</a>
@@ -88,6 +88,29 @@ if (!isset($_SESSION['emp_username'])) {
         </li>
     </ul>
 </div>
+<?php else: ?>
+    <div class="sidebar">
+    <h3 class="text-center">Dashboard</h3>
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="loadPage('create_account_by_emp.php')"><i class="fas fa-user-plus"></i> Create Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Accounts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-user-clock"></i> Pending Requests</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Employees</a>
+        </li>
+    </ul>
+</div>
+<?php endif; ?>
+
 
 <div class="content">
     <!-- Main content goes here -->
