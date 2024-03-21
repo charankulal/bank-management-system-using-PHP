@@ -49,7 +49,7 @@
 <body>
 
 <div class="container">
-    <h2 class="text-center mb-4"> Statistics</h2>
+  
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="card" style="background-color: #f8d7da;">
