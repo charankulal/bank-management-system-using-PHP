@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $customer_id=  $fetch_cust_id->fetch_column();
 
     // Prepare and execute SQL query to insert account details into database
-    $sql = "INSERT INTO account (account_number, customer_id, balance, branch_id, status) VALUES ('$account_number', '$customer_id', '$balance', '$branch_id','approved')";
+    $sql = "INSERT INTO account (account_number, customer_id, balance, branch_id, status) VALUES ('$account_number', '$customer_id', '$balance', '$branch_id','pending')";
     if ($conn->query($sql) === TRUE) {
         header("Location: customer_dashboard.php");
         // echo "<div class='alert alert-success' role='alert'>Account created successfully with Account Number: $account_number</div>";

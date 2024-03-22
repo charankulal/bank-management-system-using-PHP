@@ -14,7 +14,7 @@ $row = mysqli_fetch_array($result);
 $customerID = $row[0];
 
 
-$sql_acc = "SELECT *  FROM account WHERE customer_id='$customerID'";
+$sql_acc = "SELECT *  FROM account WHERE customer_id='$customerID' and status='approved'";
 $result_acc = $conn->query($sql_acc);
 
 
