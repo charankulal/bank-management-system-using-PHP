@@ -7,6 +7,7 @@ if (!isset($_SESSION['username'])) {
     header("Location: index.php");
     exit();
 }
+else{
 
 $sql = "SELECT customer_id  FROM customer WHERE username='" . $_SESSION["username"] . "'";
 $result = $conn->query($sql);
@@ -16,7 +17,7 @@ $customerID = $row[0];
 
 $sql_acc = "SELECT *  FROM account WHERE customer_id='$customerID' and status='approved'";
 $result_acc = $conn->query($sql_acc);
-$row1 = mysqli_fetch_array($result_acc);
+$row1 = $result_acc->fetch_assoc();
 
 
 $sql = "SELECT account.account_number
@@ -24,7 +25,7 @@ FROM account
 JOIN customer ON account.customer_id = customer.customer_id;";
 $result = $conn->query($sql);
 $_SESSION['acc'] = $row1['account_number'];
-
+}
 
 
 ?>
@@ -79,7 +80,7 @@ $_SESSION['acc'] = $row1['account_number'];
         </div>
         <div class="mx-3">
             <span class="navbar-brand mb-0 h1 mx-3"><?php echo $_SESSION["name"]; ?></span>
-            <!-- <span class="navbar-brand mb-0 h1 mx-3">Limit:</span> -->
+
             <a class="navbar-brand mb-0 h1 mx-3 text-warning" href="logout.php">Logout</a>
 
         </div>
@@ -91,13 +92,19 @@ $_SESSION['acc'] = $row1['account_number'];
             <h3 class="text-center">Dashboard</h3>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="loadPage('deposit.php')"><i class="fas fa-home"></i> Deposit</a>
+                    <a class="nav-link" href="#" onclick="loadPage('customer_home.php')"><i class="fas fa-user-plus"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" onclick="loadPage('withdraw.php')"><i class="fas fa-user-plus"></i> withdraw</a>
+                    <a class="nav-link" href="#" onclick="loadPage('deposit.php')"><i class="fas fa-user-plus"></i> Deposit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('withdraw.php')"><i class="fas fa-user-minus"></i> Withdraw</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" onclick="loadPage('send_money.php')"><i class="fas fa-list"></i> Send Money</a>
+                </li>
+                <li class="nav-item">
+                <span class="navbar-brand">Available Balance: ₹<?php echo $row1["balance"]; ?></span>
                 </li>
 
             </ul>

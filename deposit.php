@@ -12,6 +12,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 
+
 // Handle deposit form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account_number = $_SESSION['acc'];

@@ -10,11 +10,20 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
+$sql = "SELECT customer_id  FROM customer WHERE username='" . $_SESSION["username"] . "'";
+$result = $conn->query($sql);
+$row = mysqli_fetch_array($result);
+$customerID = $row[0];
+
+
+$sql_acc = "SELECT *  FROM account WHERE customer_id='$customerID' and status='approved'";
+$result_acc = $conn->query($sql_acc);
+$row1 = $result_acc->fetch_assoc();
 
 
 // Handle send money form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $account_number = $_POST['account_number'];
+    $account_number = $_SESSION['acc'];
     $amount = $_POST['amount'];
 
     $sql_check = "SELECT account_number
@@ -22,20 +31,27 @@ FROM account Where  account_number='$account_number'";
     $result = $conn->query($sql_check);
     $acc = $result->fetch_column();
     if ($acc) {
-        // Insert data into transaction table
-        $sql = "INSERT INTO transaction (account_number, transaction_type, amount) VALUES ('$account_number', 'Transfer', '$amount')";
-        if ($conn->query($sql) === TRUE) {
-            // echo "<div class='alert alert-success' role='alert'>Money sent successfully.</div>";
+        if ($amount <= $row1['balance']) {
 
+            // Insert data into transaction table
+            $sql = "INSERT INTO transaction (account_number, transaction_type, amount) VALUES ('$account_number', 'Transfer', '$amount')";
+            if ($conn->query($sql) === TRUE) {
+                header("Location: customer_dashboard.php");
+                exit;
+                // echo "<div class='alert alert-success' role='alert'>Money sent successfully.</div>";
+
+            } else {
+                echo "<div class='alert alert-danger' role='alert'>Error sending money: " . $conn->error . "</div>";
+            }
         } else {
-            echo "<div class='alert alert-danger' role='alert'>Error sending money: " . $conn->error . "</div>";
+
+            header("Location: insufficient_balance.html");
+
+            exit;
         }
     } else {
-
-
-        echo '<script type ="text/JavaScript">';
-        echo 'alert("Recipient account does not exist")';
-        echo '</script>';
+        header("Location: account_doesnot_exist.html");
+        exit;
     }
 }
 ?>
@@ -49,6 +65,23 @@ FROM account Where  account_number='$account_number'";
     <title>Send Money</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <script>
+        function validateAmount() {
+            var amountInput = document.getElementById('amount');
+            var availableBalance = <?php echo $row1['balance']; ?>; // Get available balance from PHP variable
+            var amount = parseFloat(amountInput.value);
+            if (amount > availableBalance) {
+                alert('Amount cannot exceed available balance.');
+                amountInput.value = ''; // Clear the input field
+                return false;
+            }
+            return true;
+        }
+    </script>
+
 </head>
 
 <body>
@@ -62,11 +95,11 @@ FROM account Where  account_number='$account_number'";
             </div>
             <div class="form-group">
                 <label for="amount">Amount:</label>
-                <input type="number" min="0" step="0.01" class="form-control" id="amount" name="amount" required>
+                <input type="number" min="0" step="1" class="form-control" id="amount" name="amount" required>
             </div>
             <div class="container text-center">
-            <button type="submit" class="btn btn-primary">Send Money</button>
-            <a href="./customer_dashboard.php" class="btn btn-primary">Back to Dashboard</a>
+                <button type="submit" class="btn btn-primary">Send Money</button>
+                <a href="./customer_dashboard.php" class="btn btn-primary">Back to Dashboard</a>
             </div>
         </form>
     </div>
