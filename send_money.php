@@ -24,18 +24,27 @@ $row1 = $result_acc->fetch_assoc();
 // Handle send money form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $account_number = $_SESSION['acc'];
+    $account_number_rec = $_POST['account_number'];
     $amount = $_POST['amount'];
 
     $sql_check = "SELECT account_number
 FROM account Where  account_number='$account_number'";
     $result = $conn->query($sql_check);
     $acc = $result->fetch_column();
+
+    $sql_fetch_receiver="SELECT * FROM account where  account_number='$account_number_rec'";
+    $result_acc_rec = $conn->query($sql_fetch_receiver);
+$row2 = $result_acc_rec->fetch_assoc();
+
+    $balance_acc=$row1['balance'];
+    $balance_acc_rec=$row2['balance'];
     if ($acc) {
-        if ($amount <= $row1['balance']) {
+        if ($amount <= $balance_acc) {
 
             // Insert data into transaction table
             $sql = "INSERT INTO transaction (account_number, transaction_type, amount) VALUES ('$account_number', 'Transfer', '$amount')";
-            if ($conn->query($sql) === TRUE) {
+            $sql_receiver = "UPDATE account SET balance=$balance_acc_rec+$amount WHERE account_number='$account_number_rec'";
+            if ($conn->query($sql) === TRUE && $conn->query($sql_receiver) === TRUE) {
                 header("Location: customer_dashboard.php");
                 exit;
                 // echo "<div class='alert alert-success' role='alert'>Money sent successfully.</div>";
