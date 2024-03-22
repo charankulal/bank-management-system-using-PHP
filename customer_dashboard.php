@@ -8,10 +8,22 @@ if (!isset($_SESSION['username'])) {
     exit();
 } 
 
-$sql = "SELECT customer.name, customer.email, customer.phone_number, account.account_number, account.date_opened, account.branch_id, account.balance
+$sql = "SELECT customer_id  FROM customer WHERE username='" . $_SESSION["username"] . "'";
+$result = $conn->query($sql);
+$row = mysqli_fetch_array($result);
+$customerID = $row[0];
+
+
+$sql_acc = "SELECT *  FROM account WHERE customer_id='$customerID'";
+$result_acc = $conn->query($sql_acc);
+
+
+
+$sql = "SELECT account.account_number
 FROM account
 JOIN customer ON account.customer_id = customer.customer_id;";
 $result = $conn->query($sql);
+$_SESSION['acc']=$result->fetch_column();
 
 
 
@@ -61,41 +73,28 @@ $result = $conn->query($sql);
         
       </div>
       <div class="mx-3">
-        <span class="navbar-brand mb-0 h1 mx-3"><?php echo $_SESSION["emp_name"]; ?></span>
-        <a class="navbar-brand mb-0 h1 mx-3 text-warning" href="#">Logout</a>
+        <span class="navbar-brand mb-0 h1 mx-3"><?php echo $_SESSION["name"]; ?></span>
+        <!-- <span class="navbar-brand mb-0 h1 mx-3">Limit:</span> -->
+        <a class="navbar-brand mb-0 h1 mx-3 text-warning" href="logout.php">Logout</a>
         
       </div>
       
       
     </nav>
-    <?php if($result->num_rows>0): ?>
+    <?php if($result_acc->num_rows>0): ?>
 <div class="sidebar">
     <h3 class="text-center">Dashboard</h3>
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
+            <a class="nav-link" href="#" onclick="loadPage('deposit.php')"><i class="fas fa-home"></i> Deposit</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_account_by_admin.php')"><i class="fas fa-user-plus"></i> Create Account</a>
+            <a class="nav-link" href="#" onclick="loadPage('withdraw.php')"><i class="fas fa-user-plus"></i> withdraw</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('list_all_accounts_by_admin.php')"><i class="fas fa-list"></i> List All Accounts</a>
+            <a class="nav-link" href="#" onclick="loadPage('send_money.php')"><i class="fas fa-list"></i> Send Money</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_branch.php')"><i class="fas fa-building"></i> Create Branch</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('list_all_branches.php')"><i class="fas fa-list"></i> List All Branches</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('pending_requests.php')"><i class="fas fa-user-clock"></i> Pending Requests</a>
-        </li>
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Create Employee</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Employees</a>
-        </li> -->
+        
     </ul>
 </div>
 <?php else: ?>
@@ -103,20 +102,9 @@ $result = $conn->query($sql);
     <h3 class="text-center">Dashboard</h3>
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
+            <a class="nav-link" href="#" onclick="loadPage('customer_create_account.php')"><i class="fas fa-home"></i> Create Account</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_account_by_emp.php')"><i class="fas fa-user-plus"></i> Create Account</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Accounts</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user-clock"></i> Pending Requests</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Employees</a>
-        </li>
+        
     </ul>
 </div>
 <?php endif; ?>
@@ -124,7 +112,7 @@ $result = $conn->query($sql);
 
 <div class="content">
     <!-- Main content goes here -->
-    <h2>Welcome <?php echo $_SESSION['emp_name'] ?>   </h2>
+    <h2>Welcome <?php echo $_SESSION['name'] ?>   </h2>
     <!-- You can add more content here -->
 </div>
 <script>

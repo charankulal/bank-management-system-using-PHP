@@ -4,7 +4,7 @@ session_start();
 // Check if user is already logged in
 if (isset($_SESSION['username'])) {
     // If logged in, redirect to dashboard
-    header("Location: index.php");
+    header("Location: customer_dashboard.php");
     exit();
 } 
 ?>
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Add other user data you may need in session
 
         // Redirect to dashboard or home page
-        header("Location: customer_register_landing.html");
+        header("Location: customer_dashboard.php");
         
         // You can redirect the user to another page here
     } else {
