@@ -6,15 +6,13 @@ if (!isset($_SESSION['emp_username'])) {
     // If logged in, redirect to dashboard
     header("Location: index.php");
     exit();
-} 
+}
 
-if(isset($_POST['delete_id'])) {
+if (isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
     $sql_delete = "DELETE FROM account WHERE account_number = '$delete_id'";
     if ($conn->query($sql_delete) === TRUE) {
-        
     } else {
-        
     }
 }
 
@@ -24,6 +22,7 @@ if(isset($_POST['delete_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,108 +43,110 @@ if(isset($_POST['delete_id'])) {
             padding-top: 50px;
             color: #fff;
         }
+
         .sidebar a {
             padding: 10px 15px;
             text-decoration: none;
             display: block;
             color: #fff;
         }
+
         .sidebar a:hover {
             background-color: #6c757d;
         }
+
         .content {
             margin-left: 250px;
             padding: 20px;
         }
     </style>
 </head>
+
 <body>
-<nav class="navbar bg-primary" data-bs-theme="dark">
-      <div class="mx-3">
-        <img src="assets/img/logo.png" alt="" height="60px" width="60px" />
-        <span class="navbar-brand mb-0 h1 mx-3">Your Bank</span>
-        
-      </div>
-      <div class="mx-3">
-        <span class="navbar-brand mb-0 h1 mx-3"><?php echo $_SESSION["emp_name"]; ?></span>
-        <a class="navbar-brand mb-0 h1 mx-3 text-warning" href="logout.php">Logout</a>
-        
-      </div>
-      
-      
+    <nav class="navbar bg-primary" data-bs-theme="dark">
+        <div class="mx-3">
+            <img src="assets/img/logo.png" alt="" height="60px" width="60px" />
+            <span class="navbar-brand mb-0 h1 mx-3">Your Bank</span>
+
+        </div>
+        <div class="mx-3">
+            <span class="navbar-brand mb-0 h1 mx-3"><?php echo $_SESSION["emp_name"]; ?></span>
+            <a class="navbar-brand mb-0 h1 mx-3 text-warning" href="logout.php">Logout</a>
+
+        </div>
+
+
     </nav>
-    <?php if($_SESSION['emp_username'] == 'admin'): ?>
-<div class="sidebar">
-    <h3 class="text-center">Dashboard</h3>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_account_by_admin.php')"><i class="fas fa-user-plus"></i> Create Account</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('list_all_accounts_by_admin.php')"><i class="fas fa-list"></i> List All Accounts</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_branch.php')"><i class="fas fa-building"></i> Create Branch</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('list_all_branches.php')"><i class="fas fa-list"></i> List All Branches</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('pending_requests.php')"><i class="fas fa-user-clock"></i> Pending Requests</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_employee.php')"><i class="fas fa-user-plus"></i> Create Employee</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('list_all_employees.php')"><i class="fas fa-list"></i> List All Employees</a>
-        </li>
-    </ul>
-</div>
-<?php else: ?>
-    <div class="sidebar">
-    <h3 class="text-center">Dashboard</h3>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="loadPage('create_account_by_emp.php')"><i class="fas fa-user-plus"></i> Create Account</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Accounts</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user-clock"></i> Pending Requests</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Employees</a>
-        </li>
-    </ul>
-</div>
-<?php endif; ?>
+    <?php if ($_SESSION['emp_username'] == 'admin') : ?>
+        <div class="sidebar">
+            <h3 class="text-center">Dashboard</h3>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('create_account_by_admin.php')"><i class="fas fa-user-plus"></i> Create Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('list_all_accounts_by_admin.php')"><i class="fas fa-list"></i> List All Accounts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('create_branch.php')"><i class="fas fa-building"></i> Create Branch</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('list_all_branches.php')"><i class="fas fa-list"></i> List All Branches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('pending_requests.php')"><i class="fas fa-user-clock"></i> Pending Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('create_employee.php')"><i class="fas fa-user-plus"></i> Create Employee</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('list_all_employees.php')"><i class="fas fa-list"></i> List All Employees</a>
+                </li>
+            </ul>
+        </div>
+    <?php else : ?>
+        <div class="sidebar">
+            <h3 class="text-center">Dashboard</h3>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('employee_stats.php')"><i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('create_account_by_emp.php')"><i class="fas fa-user-plus"></i> Create Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="loadPage('list_all_accounts_by_admin.php')"><i class="fas fa-list"></i> List All Accounts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-user-clock"  onclick="loadPage('pending_requests.php')"></i> Pending Requests</a>
+                </li>
+                
+            </ul>
+        </div>
+    <?php endif; ?>
 
 
-<div class="content">
-    <!-- Main content goes here -->
-    <h2>Welcome <?php echo $_SESSION['emp_name'] ?>   </h2>
-    <!-- You can add more content here -->
-</div>
-<script>
-  
-    function loadPage(pageUrl) {
-        $('.content').load(pageUrl);
-    }
-</script>
+    <div class="content">
+        <!-- Main content goes here -->
+        <h2>Welcome <?php echo $_SESSION['emp_name'] ?> </h2>
+        <!-- You can add more content here -->
+    </div>
+    <script>
+        function loadPage(pageUrl) {
+            $('.content').load(pageUrl);
+        }
+    </script>
 
-<!-- Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Font Awesome JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
 </body>
+
 </html>

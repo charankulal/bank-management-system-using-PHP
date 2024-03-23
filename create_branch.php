@@ -8,7 +8,7 @@ include 'db_connect.php';
 // Insert branch data into database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $location = $_POST['location'];
-    $manager_id = $_POST['manager_id'];
+    $manager_id = $_POST['emp_id'];
     $phone_number = $_POST['phone_number'];
     $email = $_POST['email'];
 
@@ -43,11 +43,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="form-group">
             <label for="manager_id">Manager ID:</label>
-            <input type="text" class="form-control" id="manager_id" name="manager_id" required>
+            <select name="emp_id" id="emp_id" class="form-control select" required>
+                <option value=""></option>
+                <?php 
+                  $branches = $conn->query("SELECT * FROM employee where job_type='Manager' or job_type='admin'");
+            
+                    while($row = $branches->fetch_assoc()):
+                ?>
+                  <option value="<?php echo $row['emp_id'] ?>" <?php echo isset($emp_id) && $emp_id == $row['emp_id'] ? "selected":'' ?>><?php echo $row['emp_id']. ' | '.(ucwords($row['name']). ' | '.(ucwords($row['username']))) ?></option>
+                <?php endwhile; ?>
+              </select>
         </div>
         <div class="form-group">
             <label for="phone_number">Phone Number:</label>
-            <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" pattern="[789][0-9]{9}" required>
+
         </div>
         <div class="form-group">
             <label for="email">Email:</label>

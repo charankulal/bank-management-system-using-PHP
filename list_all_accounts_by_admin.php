@@ -21,7 +21,7 @@ if (isset($_POST['delete_id'])) {
 }
 
 // Fetch all accounts from the database
-$sql = "SELECT customer.name, customer.email, customer.phone_number, account.account_number, account.date_opened, account.branch_id, account.balance
+$sql = "SELECT customer.name, customer.email, customer.phone_number, account.account_number, account.date_opened, account.branch_id, account.balance, account.status
 FROM account
 JOIN customer ON account.customer_id = customer.customer_id;";
 $result = $conn->query($sql);
@@ -99,6 +99,7 @@ $result = $conn->query($sql);
                         <th>Account Number</th>
                         <th>Date Opened</th>
                         <th>Closing Balance</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -114,6 +115,7 @@ $result = $conn->query($sql);
                             
                             echo "<td>" . $row["date_opened"] . "</td>";
                             echo " <td> ₹ " . $row["balance"] . "</td>";
+                            echo " <td>  " . $row["status"] . "</td>";
                             echo "<td class='btn-group'>";
                             echo "<form method='post' action='update_account_by_employee.php'>";
                             echo "<input type='hidden' name='update_id' value='" . $row["account_number"] . "'>";
@@ -129,7 +131,7 @@ $result = $conn->query($sql);
                         }
                         
                     } else {
-                        echo "<tr><td colspan='6'>No accounts found.</td></tr>";
+                        echo "<tr><td colspan='8'>No accounts found.</td></tr>";
                     }
                     ?>
                 </tbody>

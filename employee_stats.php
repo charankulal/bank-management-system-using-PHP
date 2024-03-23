@@ -110,7 +110,12 @@ if (!isset($_SESSION['emp_username'])) {
             <div class="card" style="background-color: #fff3cd;">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fas fa-money-check-alt"></i> Avg Transaction Value</h5>
-                    <p class="stats"> ₹1,000</p>
+                    <p class="stats"> ₹
+                    <?php 
+                  $total_deposits = $conn->query("SELECT avg(amount) FROM transaction");
+            echo  $total_deposits->fetch_column();
+                    
+                ?></p>
                 </div>
             </div>
         </div>
