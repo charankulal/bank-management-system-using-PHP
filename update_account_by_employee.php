@@ -14,28 +14,31 @@ if (isset($_POST['account_number'])) {
     // Prepare and execute SQL query to update account details in the database
     $sql = "UPDATE account SET customer_id='$customer_id', balance='$balance', branch_id='$branch_id' WHERE account_number='$account_number'";
     if ($conn->query($sql) === TRUE) {
-        // echo "<div class='alert alert-success' role='alert'>Account updated successfully.</div>";
+        // Account updated successfully, redirect to employee dashboard
         header('Location: employee_dashboard.php');
         exit;
     } else {
-        // echo "<div class='alert alert-danger' role='alert'>Error updating account: " . $conn->error . "</div>";
+        // Error occurred while updating account
+        echo "<div class='alert alert-danger' role='alert'>Error updating account: " . $conn->error . "</div>";
     }
 }
 
-$account_number = $_SESSION['account_number'];
-$sql_fetch = "SELECT * FROM account WHERE account_number='$account_number'";
-$result_fetch = $conn->query($sql_fetch);
-if ($result_fetch->num_rows == 1) {
-    $row = $result_fetch->fetch_assoc();
-    $customer_id = $row['customer_id'];
-    $balance = $row['balance'];
-    $branch_id = $row['branch_id'];
-} else {
-    // echo "<div class='alert alert-danger' role='alert'>Account not found.</div>";
-    exit; // Exit script if account not found
+// Fetch account details to pre-fill the form
+if (isset($_POST['update_id'])) {
+    $account_number = $_POST['update_id'];
+    $sql_fetch = "SELECT * FROM account WHERE account_number='$account_number'";
+    $result_fetch = $conn->query($sql_fetch);
+    if ($result_fetch->num_rows == 1) {
+        $row = $result_fetch->fetch_assoc();
+        $customer_id = $row['customer_id'];
+        $balance = $row['balance'];
+        $branch_id = $row['branch_id'];
+    } else {
+        // Account not found
+        echo "<div class='alert alert-danger' role='alert'>Account not found.</div>";
+        exit; // Exit script if account not found
+    }
 }
-
-
 ?>
 
 <!DOCTYPE html>

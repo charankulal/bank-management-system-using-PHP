@@ -7,7 +7,7 @@ if (isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
     $sql_delete = "DELETE FROM branch WHERE branch_id = '$delete_id'";
     if ($conn->query($sql_delete) === TRUE) {
-        header('Location: list_all_branches.php');
+        header('Location: employee_dashboard.php');
         exit;
     } else {
         echo "<div class='alert alert-danger' role='alert'>Error deleting branch: " . $conn->error . "</div>";

@@ -4,7 +4,7 @@ session_start();
 include 'db_connect.php';
 
 if (!isset($_SESSION['emp_username'])) {
-    // If logged in, redirect to dashboard
+    // If not logged in, redirect to index page
     header("Location: index.php");
     exit();
 }
@@ -14,7 +14,8 @@ if (isset($_POST['delete_id'])) {
     $sql_delete = "DELETE FROM account WHERE account_number = '$delete_id'";
     if ($conn->query($sql_delete) === TRUE) {
         echo "<div class='alert alert-success' role='alert'>Account deleted successfully.</div>";
-        header('employee_dashboard.php');
+        header('Location: list_all_accounts.php');
+        exit();
     } else {
         echo "<div class='alert alert-danger' role='alert'>Error deleting account: " . $conn->error . "</div>";
     }
@@ -112,24 +113,21 @@ $result = $conn->query($sql);
                             echo "<td>" . $row["email"] . "</td>";
                             echo "<td>" . $row["phone_number"] . "</td>";
                             echo "<td>" . $row["account_number"] . "</td>";
-                            
                             echo "<td>" . $row["date_opened"] . "</td>";
-                            echo " <td> ₹ " . $row["balance"] . "</td>";
-                            echo " <td>  " . $row["status"] . "</td>";
+                            echo "<td>₹" . $row["balance"] . "</td>";
+                            echo "<td>" . $row["status"] . "</td>";
                             echo "<td class='btn-group'>";
                             echo "<form method='post' action='update_account_by_employee.php'>";
                             echo "<input type='hidden' name='update_id' value='" . $row["account_number"] . "'>";
-                            $_SESSION['account_number'] = $row['account_number'];
                             echo "<button type='submit' class='btn btn-primary'>Update</button>";
                             echo "</form>";
-                            echo "<form method='post' action='employee_dashboard.php'>";
+                            echo "<form method='post' action=''>";
                             echo "<input type='hidden' name='delete_id' value='" . $row["account_number"] . "'>";
-                            echo "<button type='submit' class='btn btn-danger' >Delete</button>";
+                            echo "<button type='submit' class='btn btn-danger'>Delete</button>";
                             echo "</form>";
                             echo "</td>";
                             echo "</tr>";
                         }
-                        
                     } else {
                         echo "<tr><td colspan='8'>No accounts found.</td></tr>";
                     }
@@ -142,7 +140,6 @@ $result = $conn->query($sql);
 </body>
 
 </html>
-
 
 <?php
 // Close database connection

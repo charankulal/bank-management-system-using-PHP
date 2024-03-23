@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql_update = "UPDATE branch SET location = '$new_location', manager_id = '$new_manager_id', phone_number = '$new_phone_number', email = '$new_email' WHERE branch_id = $id";
     if ($conn->query($sql_update) === TRUE) {
         // Redirect to list all branches page after successful update
-        header("Location: list_all_branches.php");
+        header("Location: ./landing_pages/updated_successfully.html");
         exit;
     } else {
         echo "Error updating record: " . $conn->error;
