@@ -32,7 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: employee_dashboard.php");
         // echo "<div class='alert alert-success' role='alert'>Account created successfully with Account Number: $account_number</div>";
     } else {
-        echo "<div class='alert alert-danger' role='alert'>Error: " . $sql . "<br>" . $conn->error . "</div>";
+        header("Location: ./landing_pages/employee_error_page.html");
+        exit;
     }
 }
 ?>
