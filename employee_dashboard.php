@@ -20,6 +20,7 @@ if(isset($_POST['delete_id'])) {
 
 
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,7 +100,7 @@ if(isset($_POST['delete_id'])) {
             <a class="nav-link" href="#" onclick="loadPage('create_employee.php')"><i class="fas fa-user-plus"></i> Create Employee</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Employees</a>
+            <a class="nav-link" href="#" onclick="loadPage('list_all_employees.php')"><i class="fas fa-list"></i> List All Employees</a>
         </li>
     </ul>
 </div>
