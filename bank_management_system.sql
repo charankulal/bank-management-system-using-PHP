@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2024 at 01:47 AM
+-- Generation Time: Mar 23, 2024 at 06:53 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -37,13 +37,15 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- RELATIONSHIPS FOR TABLE `account`:
+--
+
+--
 -- Dumping data for table `account`
 --
 
 INSERT INTO `account` (`account_number`, `customer_id`, `balance`, `date_opened`, `branch_id`, `status`) VALUES
-('3970188', 6, '122', '2024-03-22', 2, 'approved'),
-('7896541', 4, '72200', '2024-03-22', 1, 'pending'),
-('8910417', 7, '40000', '2024-03-22', 1, 'approved');
+('6784251', 5, '40000', '2024-03-23', 7, 'approved');
 
 -- --------------------------------------------------------
 
@@ -60,12 +62,15 @@ CREATE TABLE `branch` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- RELATIONSHIPS FOR TABLE `branch`:
+--
+
+--
 -- Dumping data for table `branch`
 --
 
 INSERT INTO `branch` (`branch_id`, `location`, `manager_id`, `email`, `phone_number`) VALUES
-(1, 'Ujire', 3, 'branch1@bank.com', '9517539870'),
-(2, 'Mangaluru', 3, 'Branch2@bank.com', '9878524561');
+(7, 'Mysore', 1, 'charankulal0241@gmail.com', '9108394592');
 
 -- --------------------------------------------------------
 
@@ -83,6 +88,10 @@ CREATE TABLE `customer` (
   `phone_number` text NOT NULL,
   `dob` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- RELATIONSHIPS FOR TABLE `customer`:
+--
 
 --
 -- Dumping data for table `customer`
@@ -112,12 +121,16 @@ CREATE TABLE `employee` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- RELATIONSHIPS FOR TABLE `employee`:
+--
+
+--
 -- Dumping data for table `employee`
 --
 
 INSERT INTO `employee` (`emp_id`, `name`, `username`, `password`, `job_type`, `email`, `phone_number`, `branch_id`) VALUES
 (1, 'Admin', 'admin', '81dc9bdb52d04dc20036dbd8313ed055', 'admin', 'admin@bank.com', '9876543210', 1),
-(3, 'Arun', 'arun', '81dc9bdb52d04dc20036dbd8313ed055', 'manager', 'manager1@bank.com', '9638521470', 1);
+(9, 'charan k', 'charan', '81dc9bdb52d04dc20036dbd8313ed055', 'Manager', 'charankulal0241@gmail.com', '09108394592', 7);
 
 -- --------------------------------------------------------
 
@@ -134,20 +147,10 @@ CREATE TABLE `transaction` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `transaction`
+-- RELATIONSHIPS FOR TABLE `transaction`:
+--   `account_number`
+--       `account` -> `account_number`
 --
-
-INSERT INTO `transaction` (`transaction_id`, `account_number`, `transaction_type`, `amount`, `transaction_date`) VALUES
-(1, '8910417', 'Deposit', '1000', '2024-03-22'),
-(2, '8910417', 'Deposit', '1200', '2024-03-22'),
-(3, '8910417', 'Deposit', '1200', '2024-03-22'),
-(4, '8910417', 'Withdraw', '1200', '2024-03-22'),
-(5, '8910417', 'Withdraw', '1000', '2024-03-22'),
-(6, '8910417', 'Deposit', '58000', '2024-03-22'),
-(7, '7896541', 'Transfer', '12000', '2024-03-22'),
-(8, '7896541', 'Deposit', '1000', '2024-03-22'),
-(9, '7896541', 'Deposit', '20000', '2024-03-22'),
-(10, '7896541', 'Deposit', '50000', '2024-03-22');
 
 --
 -- Triggers `transaction`
@@ -179,15 +182,16 @@ DELIMITER ;
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`account_number`),
-  ADD KEY `customer_id` (`customer_id`),
-  ADD KEY `branch_id` (`branch_id`);
+  ADD UNIQUE KEY `customer_id` (`customer_id`),
+  ADD KEY `account_ibfk_2` (`branch_id`),
+  ADD KEY `account_ibfk_1` (`customer_id`) USING BTREE;
 
 --
 -- Indexes for table `branch`
 --
 ALTER TABLE `branch`
   ADD PRIMARY KEY (`branch_id`),
-  ADD KEY `manager_id` (`manager_id`);
+  ADD KEY `branch_ibfk_1` (`manager_id`);
 
 --
 -- Indexes for table `customer`
@@ -216,7 +220,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `customer`
@@ -228,36 +232,23 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `account`
---
-ALTER TABLE `account`
-  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
-  ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`);
-
---
--- Constraints for table `branch`
---
-ALTER TABLE `branch`
-  ADD CONSTRAINT `branch_ibfk_1` FOREIGN KEY (`manager_id`) REFERENCES `employee` (`emp_id`);
-
---
 -- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
-  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`account_number`) REFERENCES `account` (`account_number`);
+  ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`account_number`) REFERENCES `account` (`account_number`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
