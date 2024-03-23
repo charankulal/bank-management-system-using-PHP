@@ -38,7 +38,7 @@ $row2 = $result_acc_rec->fetch_assoc();
 
     $balance_acc=$row1['balance'];
     $balance_acc_rec=$row2['balance'];
-    if ($acc) {
+    if ($result_acc_rec->num_rows > 0) {
         if ($amount <= $balance_acc) {
 
             // Insert data into transaction table
@@ -54,12 +54,12 @@ $row2 = $result_acc_rec->fetch_assoc();
             }
         } else {
 
-            header("Location: insufficient_balance.html");
+            header("Location: ./landing_pages/insufficient_balance.html");
 
             exit;
         }
     } else {
-        header("Location: account_doesnot_exist.html");
+        header("Location: ./landing_pages/account_doesnot_exist.html");
         exit;
     }
 }

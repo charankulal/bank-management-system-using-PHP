@@ -95,12 +95,12 @@ if(isset($_POST['delete_id'])) {
         <li class="nav-item">
             <a class="nav-link" href="#" onclick="loadPage('pending_requests.php')"><i class="fas fa-user-clock"></i> Pending Requests</a>
         </li>
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Create Employee</a>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="loadPage('create_employee.php')"><i class="fas fa-user-plus"></i> Create Employee</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#"><i class="fas fa-list"></i> List All Employees</a>
-        </li> -->
+        </li>
     </ul>
 </div>
 <?php else: ?>
