@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="form-group">
             <label for="phone_number">Phone Number:</label>
-            <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" pattern="[789][0-9]{9}" required>
         </div>
         <div class="form-group">
             <label for="branch">Branch :</label>

@@ -121,9 +121,9 @@ if (isset($_POST['delete_id'])) {
                     <a class="nav-link" href="#" onclick="loadPage('list_all_accounts_by_admin.php')"><i class="fas fa-list"></i> List All Accounts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-user-clock"  onclick="loadPage('pending_requests.php')"></i> Pending Requests</a>
+                    <a class="nav-link" href="#" onclick="loadPage('pending_requests.php')"><i class="fas fa-user-clock"></i> Pending Requests</a>
                 </li>
-                
+
             </ul>
         </div>
     <?php endif; ?>
