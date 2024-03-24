@@ -154,7 +154,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO customer (name, username, password, email,address, phone_number, dob) VALUES ('$name', '$username', '$hashed_password', '$email', '$address','$phone', '$dob')";
 
     if ($conn->query($sql) === TRUE) {
-        header('Location: ./landing_pages//customer_register_landing.html');
+        header('Location: ./landing_pages/customer_register_landing.html');
+        exit;
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

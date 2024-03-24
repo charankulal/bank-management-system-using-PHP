@@ -93,11 +93,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirect to dashboard or home page
         header("Location: customer_dashboard.php");
+        exit;
         
         // You can redirect the user to another page here
     } else {
         // User not found or incorrect password
-        echo "Invalid username or password.";
+        header('Location: ./landing_pages/customer_error_page.html');
+        exit;
     }
 }
 

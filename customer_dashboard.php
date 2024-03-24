@@ -17,6 +17,8 @@ $customerID = $row[0];
 
 $sql_acc = "SELECT *  FROM account WHERE customer_id='$customerID' and status='approved'";
 $result_acc = $conn->query($sql_acc);
+
+if(mysqli_num_rows($result_acc) > 0){
 $row1 = $result_acc->fetch_assoc();
 
 
@@ -25,6 +27,7 @@ FROM account
 JOIN customer ON account.customer_id = customer.customer_id;";
 $result = $conn->query($sql);
 $_SESSION['acc'] = $row1['account_number'];
+}
 }
 
 
