@@ -11,6 +11,16 @@ if (isset($_POST['account_number'])) {
     $balance = mysqli_real_escape_string($conn, $_POST['balance']);
     $branch_id = mysqli_real_escape_string($conn, $_POST['branch_id']);
 
+    $fetch_cust_id = $conn->query("SELECT * FROM customer where customer_id='$customer_id'");
+    $customer_id =  $fetch_cust_id->fetch_assoc();
+    if ($fetch_cust_id->num_rows <= 0) {
+        header('Location: ./landing_pages/employee_error_page.html');
+        exit;
+    }
+
+    
+
+
     // Prepare and execute SQL query to update account details in the database
     $sql = "UPDATE account SET customer_id='$customer_id', balance='$balance', branch_id='$branch_id' WHERE account_number='$account_number'";
     if ($conn->query($sql) === TRUE) {
@@ -31,6 +41,7 @@ if (isset($_POST['update_id'])) {
     if ($result_fetch->num_rows == 1) {
         $row = $result_fetch->fetch_assoc();
         $customer_id = $row['customer_id'];
+        $customer_id_1 = $row['customer_id'];
         $balance = $row['balance'];
         $branch_id = $row['branch_id'];
     } else {
@@ -63,7 +74,7 @@ if (isset($_POST['update_id'])) {
             </div>
             <div class="form-group">
                 <label for="customer_id">Customer ID:</label>
-                <input type="text" class="form-control" id="customer_id" name="customer_id" value="<?php echo $customer_id; ?>" required>
+                <input type="text" class="form-control" id="customer_id" name="customer_id" value="<?php echo $customer_id; ?>" readonly>
             </div>
             <div class="form-group">
                 <label for="balance">Balance:</label>
