@@ -12,6 +12,9 @@ if (isset($_POST['update_id'])) {
     $sql_fetch = "SELECT * FROM employee WHERE emp_id='$update_id'";
     $result_fetch = $conn->query($sql_fetch);
 
+    $jobs = array("Manager", "Staff", "Cashier", "Asst. Manager");
+
+
     // Check if employee exists
     if ($result_fetch->num_rows == 1) {
         $row = $result_fetch->fetch_assoc();
@@ -88,7 +91,23 @@ if (isset($_POST['update_employee'])) {
             </div>
             <div class="form-group">
                 <label for="job_type">Job Type:</label>
-                <input type="text" class="form-control" id="job_type" name="job_type" value="<?php echo $job_type; ?>" required>
+                <select class="form-control" id="job_type" name="job_type" required>
+                <?php
+                    
+                    
+                        
+                    
+                        foreach($jobs as $job):
+                            $selected = isset($job_type) && $job == $row['job_type'] ? "selected" : ""; // Check if this option should be selected
+                            
+                       
+                    
+                    
+                    ?>
+                    <option value="<?php echo $job ?>" <?php echo $selected ?>><?php echo $job  ?></option>
+                    
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="form-group">
                 <label for="branch_id">Branch ID:</label>
