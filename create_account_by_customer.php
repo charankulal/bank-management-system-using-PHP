@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Database connection
 include 'db_connect.php';
 
@@ -16,7 +17,7 @@ function generateAccountNumber() {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $cust_username = mysqli_real_escape_string($conn, $_POST['cust_username']);
+    $cust_username = mysqli_real_escape_string($conn, $_SESSION['username']);
     $balance = mysqli_real_escape_string($conn, $_POST['balance']);
     $branch_id = mysqli_real_escape_string($conn, $_POST['branch']);
 
